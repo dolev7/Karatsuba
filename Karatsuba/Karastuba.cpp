@@ -27,22 +27,20 @@ namespace Mult
 		 // delete[] _resRow;
 	}
 
-	int* Karatsuba::addArrays(int* arr1, int* arr2, int size)
+	intArr Karatsuba::addArrays(intArr arr1, intArr arr2, int size)
 	{
-		int* res = new int[size + 1];
-		for (int i = 0; i <= size; i++)
-			res[i] = 0;
+		intArr res(size + 1);
 		for (int i = size-1; i>0; i--)
 		{
-			res[i] = arr1[i]+arr2[i];
-			res[i - 1] += res[i] / 10;
-			res[i] %= 10;
+			res.insert(i, arr1.getValueInPlace(i)+arr2.getValueInPlace(i));
+			res.insert((i - 1) ,res.getValueInPlace(i-1) +res.getValueInPlace(i) / 10);
+			res.insert((i) , res.getValueInPlace(i) % 10);
 		}
 		return res;
 	}
-	int* Karatsuba::subtractArrays(int* arr1, int* arr2, int size)
+	intArr Karatsuba::subtractArrays(intArr arr1, intArr arr2, int size)
 	{
-		int* res = new int[size + 1];
+		intArr res = new int[size + 1];
 		for (int i = 0; i <= size; i++)
 			res[i] = 0;
 		for (int i = size-1; i>0; i--)
@@ -72,7 +70,7 @@ namespace Mult
 		}
 	}
 
-	int* Karatsuba::getLeftDigits(int* w, int sizeLeft, int sizeRight)
+	intArr Karatsuba::getLeftDigits(intArr w, int sizeLeft, int sizeRight)
 	{
 		//need "new" - I imagine you do it with dynamic array
 		int end;
@@ -85,16 +83,18 @@ namespace Mult
 			w[end - i+1] = w[sizeLeft-i];
 			w[sizeLeft - i] = 0;
 		}
+		return w;
 	}
 
-	int* Karatsuba::getRightDigits(int* w, int sizeLeft)
+	intArr Karatsuba::getRightDigits(intArr w, int sizeLeft)
 	{
 		//need "new" - I imagine you do it with dynamic array
 		for (int i = 0; i < sizeLeft; i++)
-			w[i] = 0;
+			w.insert(i , 0);
+		return w;
 	}
 
-	int* Karatsuba::KaratsubaRec(int* x, int* y, int size)
+	intArr Karatsuba::KaratsubaRec(intArr x, intArr y, int size)
 	{
 		if (size < 2)
 		{
@@ -107,12 +107,12 @@ namespace Mult
 		int sizeLeft = (size / 2) + (size % 2);
 		int sizeRight = size / 2;
 
-		//dynamicArray a(sizeLeft), b(sizeRight), c(sizeLeft), d(sizeRight);
+		intArr a(sizeLeft), b(sizeRight), c(sizeLeft), d(sizeRight);
 
-		//a = getLeftDigits(x,size);
-		//b = getRightDigits(x,size);
-		//c = getLeftDigits(y,size);
-		//d = getRightDigits(y,size);
+		a = getLeftDigits(x,sizeLeft, sizeRight);
+		b = getRightDigits(x,size);
+		c = getLeftDigits(y,size);
+		d = getRightDigits(y,size);
 
 		//dynamicArray z0(size), z1(size+1), z2(size);
 
