@@ -1,54 +1,75 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string.h>
+#include <math.h>
+#include "Long_Mult.h"
 
-int* LongMult(int n, int x[], int y[]);
-void multX_Ydigit(int n, int x[], int y, int currentRow[], int start);
-void addRows(int n, int currentRow[], int resRow[], int start);
+using namespace std;
 
-int* LongMult(int n, int x[], int y[])
+namespace Mult
 {
-	int* resRow = new int[2 * n];
-	int* currentRow = new int[2 * n];
-	for (int i = 0; i < 2 * n; i++)
-		resRow[i] = currentRow[i] = 0;
-
-	for (int i = 0; i < n; i++)
+	Multi::Multi(int n, int x[], int y[])
 	{
-		while (y[n - i - 1] != 0)
+		_origSize = n;
+		_n = n;
+		_x = new int[n];
+		_y = new int[n];
+		_x = x;
+		_y = y;
+		_resRow = new int[2 * n];
+		_currentRow = new int[2 * n];
+		for (int i = 0; i < 2 * n; i++)
+			_resRow[i] = _currentRow[i] = 0;
+	}
+	Multi::~Multi()
+	{
+		//  delete[] _currentRow;
+		 // delete[] _resRow;
+	}
+	void Multi::LongMult()
+	{
+		for (int i = 0; i < _n; i++)
 		{
-			multX_Ydigit(n, x, y[n - i - 1], currentRow, (2 * n - i - 1));
-			addRows(n, currentRow, resRow, (2 * n - i - 1));
+			if (_y[_n - i - 1] != 0)
+			{
+				multX_Ydigit(_y[_n - i - 1], (2 * _n - i - 1));
+				addRows(2 * _n - i - 1);
+			}
 		}
 	}
-	return resRow;
-}
-
-void multX_Ydigit(int n, int x[], int yDig, int currentRow[], int start)
-{
-	for (int k = 0, i=start; k < n; k++, i--)
+	void Multi::multX_Ydigit(int yDig, int start)
 	{
-		if (x[n - k - 1] != 0)
+		_currentRow[start] = 0;
+		for (int k = 0, i = start; k < _n; k++, i--)
 		{
-			currentRow[i] += x[n - k - 1] * yDig;
-			currentRow[i - 1] = currentRow[i] / 10;
-			currentRow[i] %= 10;
-		}
-		else
-		{
-			//need to update the place in x which is 0 (after it, all numbers will be 0, so you always don't need to run them)
-			break;
-		}
-			
-	}
-}
+			_currentRow[i] += _x[_n - k - 1] * yDig;
+			_currentRow[i - 1] = _currentRow[i] / 10;
+			_currentRow[i] %= 10;
 
-void addRows (int n, int currentRow[], int resRow[], int start)
-{
-	for (int k = 0, i = start; k < n; k++, i--)
-	{
-		resRow[i] += currentRow[i];
-		resRow[i - 1] += resRow[i] / 10; //wtf?
-		resRow[i] %= 10;
+		}
 	}
+	void Multi::addRows(int start)
+	{
+		for (int k = 0, i = start; k <= _n; k++, i--)
+		{
+			_resRow[i] += _currentRow[i];
+			_resRow[i - 1] += _resRow[i] / 10;
+			_resRow[i] %= 10;
+		}
+	}
+	void Multi::print()
+	{
+		bool leadZero = true;
+		cout << "the number is " << endl;
+		for (int i = 0; i < 2 * _n; i++)
+		{
+			if (leadZero)
+			{
+				if (_resRow[i] != 0)
+					leadZero = false;
+			}
+			if (!leadZero)
+				cout << _resRow[i] << " ";
+		}
+	} 
 }

@@ -4,12 +4,12 @@
 #include "Long_Mult.h"
 
 using namespace std;
-
+using namespace Mult;
 int main()
 {
 	int num1[] = { 1,2,3,4 };
 	int num2[] = { 2,4,5,9 };
-	int num3[8];
-	LongMult(4, num1, num2);
-	
+	//Multi res(4, num2, num1);
+	//res.LongMult();
+	//res.print();
 }

@@ -1,5 +1,24 @@
 #pragma once
 
-int* LongMult(int n, int x[], int y[]);
-void multX_Ydigit(int n, int x[], int y, int currentRow[], int start);
-void addRows(int n, int currentRow[], int resRow[], int start);
+namespace Mult
+{
+	class Multi
+	{
+	private:
+		int _n;
+		int _origSize;
+		int* _x; 
+		int* _y;
+		int* _resRow;
+		int* _currentRow;
+
+	public:
+		Multi(int n, int x[], int y[]);
+		~Multi();
+		//bool inputCheck(char* n, int x[], int y[]) ;
+		void LongMult();
+		void multX_Ydigit(int yDig, int start);
+		void addRows(int start);
+		void print();
+	};
+}
