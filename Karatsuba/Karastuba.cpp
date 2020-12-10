@@ -120,7 +120,7 @@ namespace Mult
 		z1 = KaratsubaRec (aplusb, cplusd, max);
 		z2 = KaratsubaRec (b, d, sizeRight);
 		return addArrays(addArrays(z0, (subtractArrays((subtractArrays(z1, z0, sizeLeft)), z2, sizeLeft)).shiftLeft(sizeLeft), sizeLeft, sizeLeft), z2.shiftLeft(sizeLeft * 2), size,size);
-
+		// need to fix bug
 	}
 
 
