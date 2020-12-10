@@ -8,18 +8,11 @@ using namespace std;
 
 namespace Mult
 {
-	Karatsuba::Karatsuba(int n, int x[], int y[])
+	Karatsuba::Karatsuba(intArr x , intArr y, int n)
 	{
-		_origSize = n;
-		_n = n;
-		_x = new int[n];
-		_y = new int[n];
 		_x = x;
 		_y = y;
-		_resRow = new int[2 * n];
-		_currentRow = new int[2 * n];
-		for (int i = 0; i < 2 * n; i++)
-			_resRow[i] = _currentRow[i] = 0;
+		_n = n;
 	}
 	Karatsuba::~Karatsuba()
 	{
@@ -27,102 +20,108 @@ namespace Mult
 		 // delete[] _resRow;
 	}
 
-	intArr Karatsuba::addArrays(intArr arr1, intArr arr2, int size)
+	intArr Karatsuba::addArrays(intArr arr1, intArr arr2, int size, int& sizeOfAdded)
 	{
-		intArr res(size + 1);
-		for (int i = size-1; i>0; i--)
+		int j = size - 1;
+		bool leadZero = true;
+		intArr res(size+1);
+		for (int i = size; i>0; i--, j--)
 		{
-			res.insert(i, arr1.getValueInPlace(i)+arr2.getValueInPlace(i));
-			res.insert((i - 1) ,res.getValueInPlace(i-1) +res.getValueInPlace(i) / 10);
-			res.insert((i) , res.getValueInPlace(i) % 10);
+			res.insert(i, res.get(i)+arr1.get(j)+arr2.get(j));
+			res.insert((i - 1) ,res.get(i-1) +res.get(i) / 10);
+			res.insert((i) , res.get(i) % 10);
 		}
+		sizeOfAdded = res.getSize();
+		for (int i = 0; i < size ; i++)
+		{
+			if (leadZero)
+			{
+				if (res.get(i) != 0)
+					leadZero = false;
+				else
+					sizeOfAdded--;
+			}
+		}
+		
 		return res;
 	}
 	intArr Karatsuba::subtractArrays(intArr arr1, intArr arr2, int size)
 	{
-		intArr res = new int[size + 1];
-		for (int i = 0; i <= size; i++)
-			res[i] = 0;
-		for (int i = size-1; i>0; i--)
+		int j = size - 1;
+		intArr res(size);
+		for (int i = size-1; i >= 0; i--, j--)
 		{
-			res[i] += arr1[i]-arr2[i];
-			if (res[i] < 0)
+			res.insert(i, res.get(i)+arr1.get(j)- arr2.get(j));
+			if (res.get(i) < 0)
 			{
-				res[i] *= -1;
-				res[i - 1] -= 1;
+				res.insert(i, res.get(i) +10);
+				res.insert(i-1,-1);
 			}
 		}
 		return res;
 	}
-	void Karatsuba::print()
+
+	intArr Karatsuba::getLeftDigits(intArr w, int sizeLeft)
 	{
-		bool leadZero = true;
-		cout << "the number is " << endl;
-		for (int i = 0; i < 2 * _n; i++)
+		intArr toreturn(sizeLeft);
+		for (int i = 0; i <sizeLeft; i++)
 		{
-			if (leadZero)
-			{
-				if (_resRow[i] != 0)
-					leadZero = false;
-			}
-			if (!leadZero)
-				cout << _resRow[i] << " ";
+			toreturn.insert(i, w.get(i));
 		}
+		return toreturn;
 	}
 
-	intArr Karatsuba::getLeftDigits(intArr w, int sizeLeft, int sizeRight)
+	intArr Karatsuba::getRightDigits(intArr w, int sizeLeft,int sizeRight)
 	{
-		//need "new" - I imagine you do it with dynamic array
-		int end;
-		if (sizeRight % 2 != 0)
-			end = (sizeRight * 2) - 2;
-		else
-			end = (sizeRight * 2) - 1;
-		for (int i = 1; i <= sizeLeft; i++)
-		{
-			w[end - i+1] = w[sizeLeft-i];
-			w[sizeLeft - i] = 0;
-		}
-		return w;
-	}
-
-	intArr Karatsuba::getRightDigits(intArr w, int sizeLeft)
-	{
-		//need "new" - I imagine you do it with dynamic array
-		for (int i = 0; i < sizeLeft; i++)
-			w.insert(i , 0);
-		return w;
+		intArr toreturn(sizeRight);
+		for (int i = 0; i < sizeRight; i++)
+			toreturn.insert(i , w.get(sizeLeft+i));
+		return toreturn;
 	}
 
 	intArr Karatsuba::KaratsubaRec(intArr x, intArr y, int size)
 	{
-		if (size < 2)
+		cout << "THE WORLD NOW IS || X:"; x.printArr(); cout << "|| Y:"; y.printArr(); cout << " || SIZE:" <<size <<  endl;
+		if (size<2)
 		{
-			_resRow[(_origSize * 2) - 2] = (_x[_origSize - 1] * _y[_origSize - 1]) / 10;
-			_resRow[(_origSize * 2) - 1] = (_x[_origSize - 1] * _y[_origSize - 1]) % 10;
-			return _resRow;
-		}
+			static int counter = 1;
+			intArr baseCase(2);
+			if (x.get(0) == 0 && x.getSize()==2)
+				x.insert(0, x.get(1));
+			if (y.get(0) == 0 && y.getSize()==2)
+				y.insert(0, y.get(1));
 
-		//max length divided and rounded up
+			baseCase.insert(0, ((x.get(0) * y.get(0)) / 10));
+			baseCase.insert(1, ((x.get(0) * y.get(0)) % 10));
+	//		cout << "Base Case No." << counter << " : "; baseCase.printArr(); cout << endl;
+			counter++;
+			return baseCase;
+		}
 		int sizeLeft = (size / 2) + (size % 2);
 		int sizeRight = size / 2;
 
 		intArr a(sizeLeft), b(sizeRight), c(sizeLeft), d(sizeRight);
 
-		a = getLeftDigits(x,sizeLeft, sizeRight);
-		b = getRightDigits(x,size);
-		c = getLeftDigits(y,size);
-		d = getRightDigits(y,size);
+		a = getLeftDigits(x,sizeLeft);
+		b = getRightDigits(x,sizeLeft,sizeRight);
+		c = getLeftDigits(y, sizeLeft);
+		d = getRightDigits(y, sizeLeft,sizeRight);
+		cout << "A:"; a.printArr(); cout << "|| B:"; b.printArr(); cout << "|| C:"; c.printArr(); cout << "|| D:"; d.printArr(); cout << endl;
+		intArr z0(size), z1(size+1), z2(size);
+		int sizeOfaplusb=0, sizeOfcplusd=0, max;
 
-		//dynamicArray z0(size), z1(size+1), z2(size);
-
-		//z0 = KaratsubaRec(a, c, size);
-		//z1 = KaratsubaRec(addRows(a + b),addRows (c + d), size+1);
-		//z2 = KaratsubaRec(b, d, size);
-
-
-		//return addArrays(addArrays(z0 , (((SubtractArrays(SubtractArrays(z1,z0)),z2)) * multiplier) , KaratsubaRec(z2 , (long long)(pow(10, 2 * N))));
-
+		z0 = KaratsubaRec(a, c, sizeLeft);
+		intArr aplusb = addArrays(a, b, sizeLeft, sizeOfaplusb);
+		intArr cplusd = addArrays(c, d, sizeRight, sizeOfcplusd);
+		if (sizeOfaplusb >= sizeOfcplusd)
+			max = sizeOfaplusb;
+		else
+			max = sizeOfcplusd;
+		z1 = KaratsubaRec (aplusb, cplusd, max);
+		z2 = KaratsubaRec (b, d, sizeRight);
+		return addArrays(addArrays(z0, (subtractArrays((subtractArrays(z1, z0, sizeLeft)), z2, sizeLeft)).shiftLeft(sizeLeft), sizeLeft, sizeLeft), z2.shiftLeft(sizeLeft * 2), size,size);
 
 	}
+
+
 }
