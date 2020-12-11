@@ -128,7 +128,7 @@ namespace Mult
 		z1 = KaratsubaRec(aplusb, cplusd, Max(aplusb.getActualSize(),cplusd.getActualSize()));
 		z2 = KaratsubaRec(b, d, sizeRight);
 
-		intArr shiftedz0((sizeLeft * 2) + z0.getSize()), shiftedAllZeds(z1.getSize());
+		intArr shiftedz0((sizeLeft * 2) + z0.getSize()), shiftedAllZeds(sizeLeft+z1.getSize());
 		shiftedz0.shiftLeft(sizeLeft);
 		shiftedAllZeds = (subtractArrays((subtractArrays(z1, z0, z1.getSize())), z2, z1.getSize())).shiftLeft(sizeLeft);
 		cout <<  "return line" << endl;
