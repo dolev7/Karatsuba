@@ -20,7 +20,7 @@ namespace Mult
 		 // delete[] _resRow;
 	}
 
-	intArr Karatsuba::addArrays(intArr arr1, intArr arr2, int size, int& sizeOfAdded)
+	intArr Karatsuba::addArrays(intArr arr1, intArr arr2, int size)
 	{
 		int j = size - 1;
 		bool leadZero = true;
@@ -31,18 +31,6 @@ namespace Mult
 			res.insert((i - 1) ,res.get(i-1) +res.get(i) / 10);
 			res.insert((i) , res.get(i) % 10);
 		}
-		sizeOfAdded = res.getSize();
-		for (int i = 0; i < size ; i++)
-		{
-			if (leadZero)
-			{
-				if (res.get(i) != 0)
-					leadZero = false;
-				else
-					sizeOfAdded--;
-			}
-		}
-		
 		return res;
 	}
 	intArr Karatsuba::subtractArrays(intArr arr1, intArr arr2, int size)
@@ -79,21 +67,29 @@ namespace Mult
 		return toreturn;
 	}
 
+	int Karatsuba::Max(int num1, int num2)
+	{
+		if (num1 >= num2)
+			return num1;
+		else
+			return num2;
+	}
+
 	intArr Karatsuba::KaratsubaRec(intArr x, intArr y, int size)
 	{
-		cout << "THE WORLD NOW IS || X:"; x.printArr(); cout << "|| Y:"; y.printArr(); cout << " || SIZE:" <<size <<  endl;
-		if (size<2)
+		cout << "THE WORLD NOW IS || X:"; x.printArr(); cout << "|| Y:"; y.printArr(); cout << " || SIZE:" << size << endl;
+		if (size < 2)
 		{
 			static int counter = 1;
 			intArr baseCase(2);
-			if (x.get(0) == 0 && x.getSize()==2)
+			if (x.getActualSize()==1 && x.getSize() == 2)
 				x.insert(0, x.get(1));
-			if (y.get(0) == 0 && y.getSize()==2)
+			if (y.getActualSize() == 1 == 0 && y.getSize() == 2)
 				y.insert(0, y.get(1));
 
 			baseCase.insert(0, ((x.get(0) * y.get(0)) / 10));
 			baseCase.insert(1, ((x.get(0) * y.get(0)) % 10));
-	//		cout << "Base Case No." << counter << " : "; baseCase.printArr(); cout << endl;
+			cout << "Base Case No." << counter << " : "; baseCase.printArr(); cout << endl;
 			counter++;
 			return baseCase;
 		}
@@ -102,26 +98,26 @@ namespace Mult
 
 		intArr a(sizeLeft), b(sizeRight), c(sizeLeft), d(sizeRight);
 
-		a = getLeftDigits(x,sizeLeft);
-		b = getRightDigits(x,sizeLeft,sizeRight);
+		a = getLeftDigits(x, sizeLeft);
+		b = getRightDigits(x, sizeLeft, sizeRight);
 		c = getLeftDigits(y, sizeLeft);
-		d = getRightDigits(y, sizeLeft,sizeRight);
+		d = getRightDigits(y, sizeLeft, sizeRight);
 		cout << "A:"; a.printArr(); cout << "|| B:"; b.printArr(); cout << "|| C:"; c.printArr(); cout << "|| D:"; d.printArr(); cout << endl;
-		intArr z0(size), z1(size+1), z2(size);
-		int sizeOfaplusb=0, sizeOfcplusd=0, max;
+		intArr z0(size), z1(size + 1), z2(size);
 
 		z0 = KaratsubaRec(a, c, sizeLeft);
-		intArr aplusb = addArrays(a, b, sizeLeft, sizeOfaplusb);
-		intArr cplusd = addArrays(c, d, sizeRight, sizeOfcplusd);
-		if (sizeOfaplusb >= sizeOfcplusd)
-			max = sizeOfaplusb;
-		else
-			max = sizeOfcplusd;
-		z1 = KaratsubaRec (aplusb, cplusd, max);
-		z2 = KaratsubaRec (b, d, sizeRight);
-		return addArrays(addArrays(z0, (subtractArrays((subtractArrays(z1, z0, sizeLeft)), z2, sizeLeft)).shiftLeft(sizeLeft), sizeLeft, sizeLeft), z2.shiftLeft(sizeLeft * 2), size,size);
-		// need to fix bug
-	}
+		intArr aplusb = addArrays(a, b, sizeLeft);
+		intArr cplusd = addArrays(c, d, sizeRight);
+		z1 = KaratsubaRec(aplusb, cplusd, Max(aplusb.getActualSize(),cplusd.getActualSize()));
+		z2 = KaratsubaRec(b, d, sizeRight);
 
+		intArr shiftedz0((sizeLeft * 2) + z0.getSize()), shiftedAllZeds(z1.getSize());
+		shiftedz0.shiftLeft(sizeLeft);
+		shiftedAllZeds = (subtractArrays((subtractArrays(z1, z0, z1.getSize())), z2, z1.getSize())).shiftLeft(sizeLeft);
+		cout <<  "return line" << endl;
+		intArr shiftedAddedZeds(sizeLeft);
+		shiftedAddedZeds = addArrays(shiftedz0, shiftedAllZeds, Max(shiftedz0.getSize(), shiftedAllZeds.getSize()));
+		return addArrays(shiftedAddedZeds, z2, Max(shiftedAllZeds.getSize(), z2.getSize()));
+	}
 
 }
