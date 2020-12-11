@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string.h>
-#include <math.h>
+#include <vector>
 #include "Karatsuba.h"
 
 using namespace std;
@@ -23,13 +23,17 @@ namespace Mult
 	intArr Karatsuba::addArrays(intArr arr1, intArr arr2, int size)
 	{
 		int j = size - 1;
-		bool leadZero = true;
 		intArr res(size+1);
 		for (int i = size; i>0; i--, j--)
 		{
-			res.insert(i, res.get(i)+arr1.get(j)+arr2.get(j));
-			res.insert((i - 1) ,res.get(i-1) +res.get(i) / 10);
-			res.insert((i) , res.get(i) % 10);
+			res.insert(i, res.get(i) + arr1.get(j) + arr2.get(j));
+			res.insert((i - 1), res.get(i - 1) + res.get(i) / 10);
+			res.insert((i), res.get(i) % 10);
+		}
+		if (res.getActualSize() != res.getSize())
+		{
+			//res.resize();
+			cout << "resize" << endl;
 		}
 		return res;
 	}
@@ -45,6 +49,11 @@ namespace Mult
 				res.insert(i, res.get(i) +10);
 				res.insert(i-1,-1);
 			}
+		}
+		if (res.getActualSize() != res.getSize())
+		{
+			//res.resize();
+			cout << "resize" << endl;
 		}
 		return res;
 	}
@@ -64,6 +73,11 @@ namespace Mult
 		intArr toreturn(sizeRight);
 		for (int i = 0; i < sizeRight; i++)
 			toreturn.insert(i , w.get(sizeLeft+i));
+		if (toreturn.getActualSize() != toreturn.getSize())
+		{
+			cout << "resize" << endl;
+			//toreturn.resize();
+		}
 		return toreturn;
 	}
 
@@ -82,9 +96,9 @@ namespace Mult
 		{
 			static int counter = 1;
 			intArr baseCase(2);
-			if (x.getActualSize()==1 && x.getSize() == 2)
+			if (x.getActualSize()!=x.getSize())
 				x.insert(0, x.get(1));
-			if (y.getActualSize() == 1 == 0 && y.getSize() == 2)
+			if (y.getActualSize()!=y.getSize())
 				y.insert(0, y.get(1));
 
 			baseCase.insert(0, ((x.get(0) * y.get(0)) / 10));
