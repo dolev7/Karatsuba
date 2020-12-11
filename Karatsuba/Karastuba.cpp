@@ -32,7 +32,7 @@ namespace Mult
 		}
 		if (res.getActualSize() != res.getSize())
 		{
-			//res.resize();
+			res.resize();
 			cout << "resize" << endl;
 		}
 		return res;
@@ -52,7 +52,7 @@ namespace Mult
 		}
 		if (res.getActualSize() != res.getSize())
 		{
-			//res.resize();
+			res.resize();
 			cout << "resize" << endl;
 		}
 		return res;
@@ -75,8 +75,8 @@ namespace Mult
 			toreturn.insert(i , w.get(sizeLeft+i));
 		if (toreturn.getActualSize() != toreturn.getSize())
 		{
+			toreturn.resize();
 			cout << "resize" << endl;
-			//toreturn.resize();
 		}
 		return toreturn;
 	}
@@ -96,13 +96,16 @@ namespace Mult
 		{
 			static int counter = 1;
 			intArr baseCase(2);
-			if (x.getActualSize()!=x.getSize())
-				x.insert(0, x.get(1));
-			if (y.getActualSize()!=y.getSize())
-				y.insert(0, y.get(1));
+			if (x.getActualSize() != x.getSize())
+				x.resize();
+			if (y.getActualSize() != y.getSize())
+				y.resize();
 
-			baseCase.insert(0, ((x.get(0) * y.get(0)) / 10));
 			baseCase.insert(1, ((x.get(0) * y.get(0)) % 10));
+			if (((x.get(0) * y.get(0)) / 10) != 0)
+				baseCase.insert(0, ((x.get(0) * y.get(0)) / 10));
+			else
+				baseCase.resize();
 			cout << "Base Case No." << counter << " : "; baseCase.printArr(); cout << endl;
 			counter++;
 			return baseCase;
