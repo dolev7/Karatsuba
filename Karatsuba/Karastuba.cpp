@@ -22,28 +22,31 @@ namespace Mult
 
 	intArr Karatsuba::addArrays(intArr arr1, intArr arr2, int size)
 	{
-		int j = size - 1;
-		intArr res(size+1);
-		for (int i = size; i>0; i--, j--)
+		intArr res(size);
+		if (arr1.getSize() > arr2.getSize())
+			arr2.AddLeadingZeros(arr1.getSize() - arr2.getSize());
+		if (arr1.getSize() < arr2.getSize())
+			arr1.AddLeadingZeros(arr2.getSize()-arr1.getSize());
+		for (int i = arr1.getSize() - 1, j = 1; i >= 0; i--, j++)
 		{
-			res.insert(i, res.get(i) + arr1.get(j) + arr2.get(j));
+			res.insert(i, res.get(i) + arr1.get(arr1.getSize() - j) + arr2.get(arr2.getSize() - j));
 			res.insert((i - 1), res.get(i - 1) + res.get(i) / 10);
 			res.insert((i), res.get(i) % 10);
 		}
 		if (res.getActualSize() != res.getSize())
-		{
 			res.resize();
-			cout << "resize" << endl;
-		}
 		return res;
 	}
 	intArr Karatsuba::subtractArrays(intArr arr1, intArr arr2, int size)
 	{
-		int j = size - 1;
 		intArr res(size);
-		for (int i = size-1; i >= 0; i--, j--)
+		if (arr1.getSize() > arr2.getSize())
+			arr2.AddLeadingZeros(arr1.getSize() - arr2.getSize());
+		if (arr1.getSize() < arr2.getSize())
+			arr1.AddLeadingZeros(arr2.getSize()-arr1.getSize());
+		for (int i = size-1, j=1; i >= 0; i--, j++)
 		{
-			res.insert(i, res.get(i)+arr1.get(j)- arr2.get(j));
+			res.insert(i, res.get(i)+arr1.get(arr1.getSize()-j)- arr2.get(arr2.getSize() - j));
 			if (res.get(i) < 0)
 			{
 				res.insert(i, res.get(i) +10);
@@ -51,10 +54,7 @@ namespace Mult
 			}
 		}
 		if (res.getActualSize() != res.getSize())
-		{
 			res.resize();
-			cout << "resize" << endl;
-		}
 		return res;
 	}
 
@@ -74,10 +74,7 @@ namespace Mult
 		for (int i = 0; i < sizeRight; i++)
 			toreturn.insert(i , w.get(sizeLeft+i));
 		if (toreturn.getActualSize() != toreturn.getSize())
-		{
 			toreturn.resize();
-			cout << "resize" << endl;
-		}
 		return toreturn;
 	}
 
@@ -128,13 +125,17 @@ namespace Mult
 		z1 = KaratsubaRec(aplusb, cplusd, Max(aplusb.getActualSize(),cplusd.getActualSize()));
 		z2 = KaratsubaRec(b, d, sizeRight);
 
-		intArr shiftedz0((sizeLeft * 2) + z0.getSize()), shiftedAllZeds(sizeLeft+z1.getSize());
-		shiftedz0.shiftLeft(sizeLeft);
-		shiftedAllZeds = (subtractArrays((subtractArrays(z1, z0, z1.getSize())), z2, z1.getSize())).shiftLeft(sizeLeft);
+		intArr shiftedz0((sizeLeft * 2)),z1minusz0(z1.getSize()), shiftedZ1z0z2(sizeLeft);
+		shiftedz0 = z0;
+		shiftedz0.shiftLeft(sizeLeft*2);
+		z1minusz0 = subtractArrays(z1, z0, z1.getSize());
+		shiftedZ1z0z2 = subtractArrays(z1minusz0, z2, z1.getSize());
+		shiftedZ1z0z2.shiftLeft(sizeLeft);
 		cout <<  "return line" << endl;
+
 		intArr shiftedAddedZeds(sizeLeft);
-		shiftedAddedZeds = addArrays(shiftedz0, shiftedAllZeds, Max(shiftedz0.getSize(), shiftedAllZeds.getSize()));
-		return addArrays(shiftedAddedZeds, z2, Max(shiftedAllZeds.getSize(), z2.getSize()));
+		shiftedAddedZeds = addArrays(shiftedz0, shiftedZ1z0z2, Max(shiftedz0.getSize(), shiftedZ1z0z2.getSize()));
+		return addArrays(shiftedAddedZeds, z2, Max(shiftedZ1z0z2.getSize(), z2.getSize()));
 	}
 
 }
