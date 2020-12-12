@@ -21,12 +21,12 @@ namespace Mult
 
 	intArr Karatsuba::addArrays(intArr arr1, intArr arr2, int size)
 	{
-		intArr res(size);
+		intArr res(size+1);
 		if (arr1.getSize() > arr2.getSize())
 			arr2.AddLeadingZeros(arr1.getSize() - arr2.getSize());
 		if (arr1.getSize() < arr2.getSize())
 			arr1.AddLeadingZeros(arr2.getSize()-arr1.getSize());
-		for (int i = arr1.getSize() - 1, j = 1; i >= 0; i--, j++)
+		for (int i = size - 1, j = 1; i >= 0; i--, j++)
 		{
 			res.insert(i, res.get(i) + arr1.get(arr1.getSize() - j) + arr2.get(arr2.getSize() - j));
 			res.insert((i - 1), res.get(i - 1) + res.get(i) / 10);
