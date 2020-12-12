@@ -56,21 +56,21 @@ namespace Mult
 
     void intArr::resize()
     {
-        int counter = 0;
+        int size = static_cast<int>(intArray.size());
+        int zerocounter = 0;
         bool leadZero = true;
-        for (int i = 0; i < static_cast<int>(intArray.size()); i++)
+        for (int i = 0; i < size; i++)
         {
             if (leadZero)
             {
                 if (intArray[i] != 0)
                     leadZero = false;
+                else zerocounter++;
             }
-            if (!leadZero)
-                counter++;
-        }
-        for (int i = 0; i < static_cast<int>(intArray.size() - counter); i++)
-            intArray[i] = intArray[i + counter];
-        intArray.resize(intArray.size() - counter);
+        }//
+        for (int i = 0; i < size-zerocounter; i++)
+            intArray[i] = intArray[i +zerocounter];
+        intArray.resize(size-zerocounter);
     }
     void intArr::AddLeadingZeros(int numberOfZeros)
     {
