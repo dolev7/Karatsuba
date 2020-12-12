@@ -3,7 +3,6 @@
 #include <string.h>
 #include <vector>
 #include "Karatsuba.h"
-
 using namespace std;
 
 namespace Mult
