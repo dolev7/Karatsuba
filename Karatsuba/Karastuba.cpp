@@ -80,8 +80,6 @@ namespace Mult
 	intArr Karatsuba::getLeftDigits(intArr w)
 	{
 		int size = w.getSize() / 2;
-		if (w.getSize()%2== 1)
-			size++;
 		intArr toreturn(size);
 		for (int i = 0; i <size; i++)
 		{
@@ -93,10 +91,11 @@ namespace Mult
 	intArr Karatsuba::getRightDigits(intArr w)
 	{
 		int wsize = w.getSize();
-		int start = wsize/2;
-		if (wsize%2 == 1)
-			start++;
-		intArr toreturn(wsize / 2);
+		int start = wsize / 2;
+		int size = start;
+		if (wsize % 2 == 1)
+			size++;
+		intArr toreturn(size);
 		int j = 0;
 		for (int i = start; i < wsize; i++,j++)
 				toreturn.insert(j, w.get(i));
@@ -112,10 +111,29 @@ namespace Mult
 		else
 			return num2;
 	}
-
+	bool Karatsuba::inputcheck(intArr x, intArr y, char* size)
+	{
+		return true;
+	}
 	intArr Karatsuba::KaratsubaRec(intArr x, intArr y, int size)
 	{
-		
+		if (x.getActualSize() == 0 || y.getActualSize() == 0)
+		{
+			intArr zero(1);
+			zero.insert(0, 0);
+			return zero;
+		}
+		int sizeX = x.getSize();
+		int sizeY = y.getSize();
+		size = sizeX;
+
+		if (sizeX > sizeY)
+			y.AddLeadingZeros(sizeX - sizeY);
+		if (sizeX < sizeY)
+		{
+			x.AddLeadingZeros(sizeY - sizeX);
+			size = sizeY;
+		}
 		//cout << "THE WORLD NOW IS || X:"; x.printArr(); cout << "|| Y:"; y.printArr(); cout << " || SIZE:" << size << endl;
 		if (size < 2)
 		{
@@ -131,12 +149,12 @@ namespace Mult
 				baseCase.insert(0, ((x.get(0) * y.get(0)) / 10));
 			else
 				baseCase.resize();
-			cout << "Base Case No." << counter << " : "; baseCase.printArr(); cout << endl;
+		//	cout << "Base Case No." << counter << " : "; baseCase.printArr(); cout << endl;
 			counter++;
 			return baseCase;
 		}
-		int sizeLeft = (size / 2) + (size % 2);
-		int sizeRight = size / 2;
+		int sizeRight = (size / 2) + (size % 2);
+		int sizeLeft = size / 2;
 
 		intArr a(sizeLeft), b(sizeRight), c(sizeLeft), d(sizeRight);
 
@@ -172,17 +190,17 @@ namespace Mult
 
 		intArr shiftedz0((sizeLeft * 2)),z1minusz0(z1.getSize()), shiftedZ1z0z2(sizeLeft);
 		shiftedz0 = z0;
-		if(size%2==1)
-		shiftedz0.shiftLeft(size-1);
-		else
-		shiftedz0.shiftLeft(size);
+		int add = 0;
+		if (size%2 == 1)
+			add = 1;
+		shiftedz0.shiftLeft(size+add);
 		z1minusz0 = subtractArrays(z1, z0);
-		shiftedZ1z0z2 = subtractArrays(z1minusz0, z2);
-		shiftedZ1z0z2.shiftLeft(size/2);
-	//	cout << "summary where || X = "; x.printArr(); cout << "  || Y = "; y.printArr(); cout << endl;
-	//	cout << "Z0 is: "; z0.printArr(); cout << " ||Z1 is: "; z1.printArr(); cout << " ||Z2 is: "; z2.printArr(); cout << endl;
-	//	cout << "shiftedz0 is :"; shiftedz0.printArr(); cout << " || shiftedZ1z0z2 is:"; shiftedZ1z0z2.printArr(); cout << endl;
+		shiftedZ1z0z2 = subtractArrays(z1minusz0, z2);	
+		shiftedZ1z0z2.shiftLeft(sizeRight);
+		//cout << "summary where || X = "; x.printArr(); cout << "  || Y = "; y.printArr(); cout << endl;
+		//cout << "Z0 is: "; z0.printArr(); cout << " ||Z1 is: "; z1.printArr(); cout << " ||Z2 is: "; z2.printArr(); cout << endl;
+		//cout << "shiftedz0 is :"; shiftedz0.printArr(); cout << " || shiftedZ1z0z2 is:"; shiftedZ1z0z2.printArr(); cout << endl;
+		//cout << "return is : "; addArrays(addArrays(shiftedz0, shiftedZ1z0z2), z2).printArr(); cout << endl;
 		return addArrays(addArrays(shiftedz0, shiftedZ1z0z2), z2);
 	}
-
 }

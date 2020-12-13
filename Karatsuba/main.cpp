@@ -11,24 +11,29 @@ int main()
 {
 	int n;
 	cin >> n;
+	if (n == 0)
+	{
+		cout << "0";
+		return 0;
+	}
 	intArr x(n);
 	intArr y(n);
 	int current;
 	for (int i = 0; i < n; i++)
 	{
 		cin >> current;
-		x.pushback(current);
+		x.insert(i,current);
 	}
 	for (int i = 0; i < n; i++)
 	{
 		cin >> current;
-		y.pushback(current);
+		y.insert(i,current);
 	}
 	x.resize();
 	y.resize();
-//	x.printArr(); cout << endl;
-//	y.printArr(); cout << endl;
-
+	x.printArr(); cout << endl;
+	y.printArr(); cout << endl;
+		
 	Karatsuba calc(x,y,n);
 	intArr res=calc.KaratsubaRec(x, y,n);
 	res.printArr();

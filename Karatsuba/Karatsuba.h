@@ -11,9 +11,11 @@ namespace Mult
 
 	public:
 		Karatsuba(intArr x,intArr y , int n);
+		
 		~Karatsuba();
 		//bool inputCheck(char* n, int x[], int y[]) ;
 		intArr addArrays(intArr arr1, intArr arr2);
+		bool inputcheck(intArr x, intArr y, char* size);
 		intArr subtractArrays(intArr arr1, intArr arr2);
 		intArr getLeftDigits(intArr w);
 		intArr getRightDigits(intArr w);
