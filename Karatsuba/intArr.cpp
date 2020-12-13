@@ -90,13 +90,27 @@ namespace Mult
             intArray[i] = intArray[i +zerocounter];
         intArray.resize(size-zerocounter);
     }
-    void intArr::AddLeadingZeros(int numberOfZeros)
+  //  void intArr::AddLeadingZeros(int numberOfZeros)
+   // {
+    //    for (int i = 0; i < numberOfZeros; i++)
+     //   {
+      //      intArray.push_back(0);
+       //     rotate(intArray.rbegin(), intArray.rbegin() + 1, intArray.rend());
+        //}
+    //}
+    intArr intArr::AddZeros(int numberOfZeros)
     {
+        int sizeAfter = this->getSize() + numberOfZeros;
+        intArr res(sizeAfter);
         for (int i = 0; i < numberOfZeros; i++)
         {
-            intArray.push_back(0);
-            rotate(intArray.rbegin(), intArray.rbegin() + 1, intArray.rend());
+            res.insert(i, 0);
         }
+        for (int i = numberOfZeros; i < sizeAfter; i++)
+        {
+            res.insert(i, this->get(i-numberOfZeros));
+        }
+        return res;
     }
 
 };

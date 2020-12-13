@@ -26,12 +26,12 @@ namespace Mult
 		int maxSize = size1;
 		if (size1 > size2)
 		{
-			arr2.AddLeadingZeros(size1 - size2);
+			arr2=arr2.AddZeros(size1 - size2);
 			maxSize = size1;
 		}
 		if (size1 < size2)
 		{
-			arr1.AddLeadingZeros(size2 - size1);
+			arr1=arr1.AddZeros(size2 - size1);
 			maxSize = size2;
 		}
 		intArr res(maxSize+1);
@@ -54,12 +54,12 @@ namespace Mult
 		
 		if (size1 > size2)
 		{
-			arr2.AddLeadingZeros(size1 - size2);
+			arr2=arr2.AddZeros(size1 - size2);
 			maxSize = size1;
 		}
 		if (size1 < size2)
 		{
-			arr1.AddLeadingZeros(size2 - size1);
+			arr1.AddZeros(size2 - size1);
 			maxSize = size2;
 		}
 		intArr res(maxSize); 
@@ -128,10 +128,10 @@ namespace Mult
 		size = sizeX;
 
 		if (sizeX > sizeY)
-			y.AddLeadingZeros(sizeX - sizeY);
+			y = y.AddZeros(sizeX - sizeY);//.AddLeadingZeros(sizeX - sizeY);
 		if (sizeX < sizeY)
 		{
-			x.AddLeadingZeros(sizeY - sizeX);
+			x = x.AddZeros(sizeY - sizeX);//x.AddLeadingZeros(sizeY - sizeX);
 			size = sizeY;
 		}
 		//cout << "THE WORLD NOW IS || X:"; x.printArr(); cout << "|| Y:"; y.printArr(); cout << " || SIZE:" << size << endl;
