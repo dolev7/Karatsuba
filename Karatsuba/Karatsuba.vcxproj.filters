@@ -24,12 +24,18 @@
     <ClCompile Include="intArr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Long_Mult.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Karatsuba.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="intArr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Long_Mult.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

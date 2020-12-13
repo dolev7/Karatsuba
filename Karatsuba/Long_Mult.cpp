@@ -59,8 +59,9 @@ namespace Mult
 	}
 	void Multi::print()
 	{
+		bool printed = false;
 		bool leadZero = true;
-		cout << "the number is " << endl;
+		cout << "Long multiplication : x * y = ";
 		for (int i = 0; i < 2 * _n; i++)
 		{
 			if (leadZero)
@@ -69,7 +70,13 @@ namespace Mult
 					leadZero = false;
 			}
 			if (!leadZero)
-				cout << _resRow[i] << " ";
+			{
+				cout << _resRow[i];
+				printed = true;
+			}
 		}
+		if (!printed)
+			cout << "0";
+		cout << endl;
 	} 
 }

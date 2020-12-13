@@ -27,8 +27,24 @@ namespace Mult
     }
     void intArr::printArr()
     {
-        for (int i = 0; i < static_cast<int>(intArray.size()); i++)
-            cout << intArray[i];
+        bool printed = false;
+        bool leadZero = true;
+        for (int i = 0; i < this->getSize(); i++)
+        {
+            if (leadZero)
+            {
+                if (this->intArray[i] != 0)
+                    leadZero = false;
+            }
+            if (!leadZero)
+            {
+                cout << this->intArray[i];
+                printed = true;
+            }
+        }
+        if (!printed)
+            cout << "0";
+        cout << endl;
     }
     void intArr::shiftLeft(int toshift)
     {
