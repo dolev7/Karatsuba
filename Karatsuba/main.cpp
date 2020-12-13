@@ -4,15 +4,33 @@
 #include "Long_Mult.h"
 #include "Karatsuba.h"
 #include "intArr.h"
+#include <vector>
 using namespace std;
 using namespace Mult;
 int main()
 {
-	intArr arr1(1);
-	intArr arr2(1);
-	arr1.insert(0, 5);
-	arr2.insert(0, 4);
-	Karatsuba calc(arr1, arr2, 1);
-	intArr res=calc.KaratsubaRec(arr1, arr2,1);
+	int n;
+	cin >> n;
+	intArr x(n);
+	intArr y(n);
+	int current;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> current;
+		x.pushback(current);
+	}
+	for (int i = 0; i < n; i++)
+	{
+		cin >> current;
+		y.pushback(current);
+	}
+	x.resize();
+	y.resize();
+//	x.printArr(); cout << endl;
+//	y.printArr(); cout << endl;
+
+	Karatsuba calc(x,y,n);
+	intArr res=calc.KaratsubaRec(x, y,n);
 	res.printArr();
+	cout << endl;
 }

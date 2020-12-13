@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string> 
 #include <vector>
+#include "Karatsuba.h"
 using namespace std;
-
 namespace Mult
 {
     intArr::intArr(int size)
@@ -56,6 +56,8 @@ namespace Mult
 
     void intArr::resize()
     {
+        if (this->getActualSize() == 0)
+            return;
         int size = static_cast<int>(intArray.size());
         int zerocounter = 0;
         bool leadZero = true;

@@ -77,21 +77,29 @@ namespace Mult
 		return res;
 	}
 
-	intArr Karatsuba::getLeftDigits(intArr w, int sizeLeft)
+	intArr Karatsuba::getLeftDigits(intArr w)
 	{
-		intArr toreturn(sizeLeft);
-		for (int i = 0; i <sizeLeft; i++)
+		int size = w.getSize() / 2;
+		if (w.getSize()%2== 1)
+			size++;
+		intArr toreturn(size);
+		for (int i = 0; i <size; i++)
 		{
 			toreturn.insert(i, w.get(i));
 		}
 		return toreturn;
 	}
 
-	intArr Karatsuba::getRightDigits(intArr w, int sizeLeft,int sizeRight)
+	intArr Karatsuba::getRightDigits(intArr w)
 	{
-		intArr toreturn(sizeRight);
-		for (int i = 0; i < sizeRight; i++)
-			toreturn.insert(i , w.get(sizeLeft+i));
+		int wsize = w.getSize();
+		int start = wsize/2;
+		if (wsize%2 == 1)
+			start++;
+		intArr toreturn(wsize / 2);
+		int j = 0;
+		for (int i = start; i < wsize; i++,j++)
+				toreturn.insert(j, w.get(i));
 		if (toreturn.getActualSize() != toreturn.getSize())
 			toreturn.resize();
 		return toreturn;
@@ -107,7 +115,8 @@ namespace Mult
 
 	intArr Karatsuba::KaratsubaRec(intArr x, intArr y, int size)
 	{
-		cout << "THE WORLD NOW IS || X:"; x.printArr(); cout << "|| Y:"; y.printArr(); cout << " || SIZE:" << size << endl;
+		
+		//cout << "THE WORLD NOW IS || X:"; x.printArr(); cout << "|| Y:"; y.printArr(); cout << " || SIZE:" << size << endl;
 		if (size < 2)
 		{
 			static int counter = 1;
@@ -131,30 +140,49 @@ namespace Mult
 
 		intArr a(sizeLeft), b(sizeRight), c(sizeLeft), d(sizeRight);
 
-		a = getLeftDigits(x, sizeLeft);
-		b = getRightDigits(x, sizeLeft, sizeRight);
-		c = getLeftDigits(y, sizeLeft);
-		d = getRightDigits(y, sizeLeft, sizeRight);
-		cout << "A:"; a.printArr(); cout << "|| B:"; b.printArr(); cout << "|| C:"; c.printArr(); cout << "|| D:"; d.printArr(); cout << endl;
+		if (x.getSize() > 1)
+		{
+			a = getLeftDigits(x);
+			b = getRightDigits(x);
+		}
+		else
+		{
+			a.insert(0, 0);
+			b = x;
+		}
+		if (y.getSize() > 1)
+		{
+			c = getLeftDigits(y);
+			d = getRightDigits(y);
+		}
+		else 
+		{
+			c.insert(0, 0);
+			d = y;
+		}
+		//cout << "A:"; a.printArr(); cout << "|| B:"; b.printArr(); cout << "|| C:"; c.printArr(); cout << "|| D:"; d.printArr(); cout << endl;
 		intArr z0(size), z1(size + 1), z2(size);
 
 		z0 = KaratsubaRec(a, c, sizeLeft);
 		intArr aplusb = addArrays(a, b);
 		intArr cplusd = addArrays(c, d);
+
 		z1 = KaratsubaRec(aplusb, cplusd, Max(aplusb.getActualSize(),cplusd.getActualSize()));
 		z2 = KaratsubaRec(b, d, sizeRight);
 
 		intArr shiftedz0((sizeLeft * 2)),z1minusz0(z1.getSize()), shiftedZ1z0z2(sizeLeft);
 		shiftedz0 = z0;
-		shiftedz0.shiftLeft(sizeLeft*2);
+		if(size%2==1)
+		shiftedz0.shiftLeft(size-1);
+		else
+		shiftedz0.shiftLeft(size);
 		z1minusz0 = subtractArrays(z1, z0);
 		shiftedZ1z0z2 = subtractArrays(z1minusz0, z2);
-		shiftedZ1z0z2.shiftLeft(sizeLeft);
-		cout <<  "return line" << endl;
-
-		intArr shiftedAddedZeds(sizeLeft*2);
-		shiftedAddedZeds = addArrays(shiftedz0, shiftedZ1z0z2);
-		return addArrays(shiftedAddedZeds, z2);
+		shiftedZ1z0z2.shiftLeft(size/2);
+	//	cout << "summary where || X = "; x.printArr(); cout << "  || Y = "; y.printArr(); cout << endl;
+	//	cout << "Z0 is: "; z0.printArr(); cout << " ||Z1 is: "; z1.printArr(); cout << " ||Z2 is: "; z2.printArr(); cout << endl;
+	//	cout << "shiftedz0 is :"; shiftedz0.printArr(); cout << " || shiftedZ1z0z2 is:"; shiftedZ1z0z2.printArr(); cout << endl;
+		return addArrays(addArrays(shiftedz0, shiftedZ1z0z2), z2);
 	}
 
 }
