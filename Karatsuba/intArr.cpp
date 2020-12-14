@@ -21,10 +21,6 @@ namespace Mult
     {
         intArray[place] = value;
     }
-    void intArr::pushback(int value)
-    {
-        intArray.push_back(value);
-    }
     void intArr::printArr()
     {
         bool printed = false;
@@ -54,23 +50,20 @@ namespace Mult
     }
     int intArr::getActualSize()const
     { 
-        int counter = 0;
-        bool leadZero = true;
-        for (int i = 0; i < static_cast<int>(intArray.size()); i++)
+        int zeros = 0;
+        int size = static_cast<int>(intArray.size());
+        for (int i = 0; i < size; i++)
         {
-            if (leadZero)
-            {
-                if (intArray[i] != 0)
-                    leadZero = false;
-            }
-            if (!leadZero)
-                counter++;
+            if (intArray[i] == 0)
+                zeros++;
+            else
+                break;
         }
         
-        return counter;
+        return size-zeros;
     }
 
-    void intArr::resize()
+    void intArr::cutLeadingZeros()
     {
         if (this->getActualSize() == 0)
             return;
@@ -85,19 +78,12 @@ namespace Mult
                     leadZero = false;
                 else zerocounter++;
             }
-        }//
+        }
         for (int i = 0; i < size-zerocounter; i++)
             intArray[i] = intArray[i +zerocounter];
         intArray.resize(size-zerocounter);
     }
-  //  void intArr::AddLeadingZeros(int numberOfZeros)
-   // {
-    //    for (int i = 0; i < numberOfZeros; i++)
-     //   {
-      //      intArray.push_back(0);
-       //     rotate(intArray.rbegin(), intArray.rbegin() + 1, intArray.rend());
-        //}
-    //}
+
     intArr intArr::AddZeros(int numberOfZeros)
     {
         int sizeAfter = this->getSize() + numberOfZeros;

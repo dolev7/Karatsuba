@@ -141,12 +141,14 @@
   <ItemGroup>
     <ClCompile Include="intArr.cpp" />
     <ClCompile Include="Karastuba.cpp" />
+    <ClCompile Include="KStack.cpp" />
     <ClCompile Include="Long_Mult.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="intArr.h" />
     <ClInclude Include="Karatsuba.h" />
+    <ClInclude Include="KStack.h" />
     <ClInclude Include="Long_Mult.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

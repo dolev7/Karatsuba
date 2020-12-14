@@ -27,6 +27,9 @@
     <ClCompile Include="Long_Mult.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="KStack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Karatsuba.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Long_Mult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KStack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

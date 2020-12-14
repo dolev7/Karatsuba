@@ -26,7 +26,7 @@ int main()
 	cin >> n;
 	if (n == 0)
 	{
-		cout << "0";
+		cout << "You have entered empty numbers";
 		return 0;
 	}
 	getchar();// skip "\n"
@@ -67,13 +67,11 @@ int main()
 		cout << "wrong output";
 		return 0;
 	}
-	x.resize();
-	y.resize();
+	x.cutLeadingZeros();
+	y.cutLeadingZeros();
 	
 	Karatsuba calc(x,y,n);
 	bool inputOK = true;
-	char a[2]="d";
-	inputOK=calc.inputcheck(x,y,a);
 	if (inputOK)
 	{
 		Multi classic(n, xclassic, yclassic);
