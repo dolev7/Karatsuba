@@ -3,14 +3,20 @@
 
 namespace Mult
 {
+	struct Item
+	{
+		Karatsuba k;
+		int line;
+		intArr returnVal;
+	};
 	class Node
 	{
 		friend class KStack;
 	private:
-		Karatsuba _data;
 		Node* _link;
+		Item _data;
 		public:
-		Node(Karatsuba data, Node* link)
+		Node(Item data, Node* link)
 		{
 			_data = data;
 			_link = link;
@@ -25,8 +31,8 @@ namespace Mult
 		~KStack();
 		void MakeEmpty();
 		bool IsEmpty();
-		void Push(Karatsuba item);
-		Karatsuba Pop();
-		Karatsuba Top();
+		void Push(Item item);
+		Item Pop();
+		//Node* Top();
 	};
 }

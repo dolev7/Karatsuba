@@ -1,5 +1,7 @@
 #pragma once
-
+#include <chrono>
+#include <fstream>
+#include <iomanip>
 namespace Mult
 {
 	class Multi
@@ -20,5 +22,6 @@ namespace Mult
 		void multX_Ydigit(int yDig, int start);
 		void addRows(int start);
 		void print();
+		void LongMult_Print_and_TimeMeasure(ofstream myfile);
 	};
 }

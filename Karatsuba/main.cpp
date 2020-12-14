@@ -5,31 +5,51 @@
 #include "Karatsuba.h"
 #include "intArr.h"
 #include <vector>
+#include <string>
+#include <chrono>
+#include <fstream>
+#include <iomanip>
 static const int  MAX_SIZE = 100;
 using namespace std;
 using namespace Mult;
 int main()
 {
-	//char ntoget[MAX_SIZE];
-	//char k = getchar()-48;
-	//int i = 0;
-/*	if (k == 0)
+	ofstream myfile("Measure.txt"); // The name of the file
+	char d;
+	char ntoget[MAX_SIZE];
+	getchar();//skip space
+	d = getchar();
+	int i = 0;
+	bool leadzero = false;
+	while (d != '\n')
 	{
-		cout << "wrong input - N With leading zero." <<endl;
+		if (d < '0' || d> '9')
+		{
+			cout << "wrong output";
+			return 0;
+		}
+		if (d == '0' && i == 0)
+			leadzero = true;
+		ntoget[i] =d-'0';
+		d = getchar();
+		i++;
+	}
+	ntoget[i] = '\0';
+	if (leadzero)
+	{
+		if (i == 1)
+			cout << "you have entered n=0 therefore x and y are empty numbers";
+		else
+		cout << "wrong output";
 		return 0;
 	}
-	while (k != 0)
+	int n=0;
+	int multiply = 1;
+	for (int k = strlen(ntoget)-1; k >=0 ; k--)
 	{
-		ntoget[i]=k-48
-	}*/
-	int n;
-	cin >> n;
-	if (n == 0)
-	{
-		cout << "You have entered empty numbers";
-		return 0;
+		 n += ntoget[k] * multiply;
+		multiply *= 10;
 	}
-	getchar();// skip "\n"
 	int* xclassic = new int[n];
 	int* yclassic = new int[n];
 	intArr x(n);
@@ -44,7 +64,7 @@ int main()
 			cout << "wrong output";
 			return 0;
 		}
-		current = c-48;
+		current = c - '0';
 		x.insert(i,current);
 		xclassic[i] = current;
 	}
@@ -57,7 +77,7 @@ int main()
 	for (int i = 0; i < n; i++)
 	{
 		c = getchar();
-		current = c - 48;
+		current = c - '0';
 		y.insert(i,current);
 		yclassic[i] = current;
 	}
@@ -75,12 +95,12 @@ int main()
 	if (inputOK)
 	{
 		Multi classic(n, xclassic, yclassic);
-		classic.LongMult();
-		classic.print();
-		cout << "Karatsuba(recursive) : x * y = " ; 
-		intArr printREC=calc.KaratsubaRec(x, y, n);
-		printREC.printArr();
-		cout << "Karatsuba(iterative) : x * y = "; 
-		printREC.printArr();
+		classic.LongMult_Print_and_TimeMeasure("mesure");
+		calc.KaratsubaRec_Print_and_TimeMeasure(myfile);
+		
+		//cout << "Karatsuba(iterative) : x * y = "; 
+		//printREC.printArr();
 	}
+	myfile.close();
+	return 0;
 }

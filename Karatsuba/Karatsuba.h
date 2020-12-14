@@ -1,5 +1,8 @@
 #pragma once
 #include "intArr.h"
+#include <chrono>
+#include <fstream>
+#include <iomanip>
 namespace Mult
 {
 	class Karatsuba
@@ -11,7 +14,7 @@ namespace Mult
 
 	public:
 		Karatsuba(intArr x,intArr y , int n);
-		Karatsuba() {};
+		Karatsuba() { _n = 0; };
 		~Karatsuba();
 		//bool inputCheck(char* n, int x[], int y[]) ;
 		intArr addArrays(intArr arr1, intArr arr2);
@@ -19,5 +22,7 @@ namespace Mult
 		intArr getLeftDigits(intArr w);
 		intArr getRightDigits(intArr w);
 		intArr KaratsubaRec(intArr x, intArr y, int size);
+		void KaratsubaRec_Print_and_TimeMeasure(ofstream myfile);
+		//intArr KaratsubaIterative(intArr x, intArr y, int size);
 	};
 }

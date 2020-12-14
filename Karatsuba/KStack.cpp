@@ -28,16 +28,16 @@ namespace Mult
 			delete temp;
 		}
 	}
-	void KStack::Push(Karatsuba item)
+	void KStack::Push(Item item)
 	{
 		top = new Node(item, top);
 	}
-	Karatsuba KStack::Pop()
+	Item KStack::Pop()
 	{
 		if (IsEmpty())
 			exit(1);
 		Node* temp = top;
-		Karatsuba item = top->_data;
+		Item item = top->_data;
 		top = top->_link;
 		delete temp;
 		return item;
