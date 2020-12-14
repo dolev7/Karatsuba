@@ -37,7 +37,7 @@ namespace Mult
 			}
 		}
 	}
-	void Multi::LongMult_Print_and_TimeMeasure(ofstream myfile)
+	void Multi::LongMult_Print_and_TimeMeasure(ofstream& myfile)
 	{
 		auto start = chrono::high_resolution_clock::now();
 		// unsync the I/O of C and C++.

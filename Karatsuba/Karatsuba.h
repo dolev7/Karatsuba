@@ -3,6 +3,7 @@
 #include <chrono>
 #include <fstream>
 #include <iomanip>
+using namespace std;
 namespace Mult
 {
 	class Karatsuba
@@ -22,7 +23,7 @@ namespace Mult
 		intArr getLeftDigits(intArr w);
 		intArr getRightDigits(intArr w);
 		intArr KaratsubaRec(intArr x, intArr y, int size);
-		void KaratsubaRec_Print_and_TimeMeasure(ofstream myfile);
-		//intArr KaratsubaIterative(intArr x, intArr y, int size);
+		void KaratsubaRec_Print_and_TimeMeasure(ofstream& myfile);
+		
 	};
 }

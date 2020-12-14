@@ -166,7 +166,7 @@ namespace Mult
 		shiftedZ1z0z2.shiftLeft(sizeRight);
 		return addArrays(addArrays(shiftedz0, shiftedZ1z0z2), z2);
 	}
-	void Karatsuba::KaratsubaRec_Print_and_TimeMeasure(ofstream myfile)
+	void Karatsuba::KaratsubaRec_Print_and_TimeMeasure(ofstream& myfile)
 	{
 		
 		cout << "Karatsuba(recursive) : x * y = ";
