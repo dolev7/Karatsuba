@@ -13,10 +13,6 @@ namespace Mult
         for (int i = 0; i < size; i++)
             intArray.push_back(0);
     }
-    intArr::~intArr()
-    {
-     //   delete[] intArray;
-    }
     void intArr::insert(int place, int value)
     {
         intArray[place] = value;

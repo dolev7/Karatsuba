@@ -12,19 +12,18 @@ namespace Mult
 	{
 		_origSize = n;
 		_n = n;
-		_x = new int[n];
-		_y = new int[n];
 		_x = x;
 		_y = y;
-		_resRow = new int[2 * n];
-		_currentRow = new int[2 * n];
+		int initsize = 2 * n;
+		_resRow = new int[initsize];
+		_currentRow = new int[initsize];
 		for (int i = 0; i < 2 * n; i++)
 			_resRow[i] = _currentRow[i] = 0;
 	}
 	Multi::~Multi()
 	{
-		//  delete[] _currentRow;
-		 // delete[] _resRow;
+		  delete[] _currentRow;
+		  delete[] _resRow;
 	}
 	void Multi::LongMult()
 	{
@@ -40,12 +39,10 @@ namespace Mult
 	void Multi::LongMult_Print_and_TimeMeasure(ofstream& myfile)
 	{
 		auto start = chrono::high_resolution_clock::now();
-		// unsync the I/O of C and C++.
 		ios_base::sync_with_stdio(false);
-		this->LongMult();// Here you put the name of the function you wish to measure
+		this->LongMult();
 		auto end = chrono::high_resolution_clock::now();
-		// Calculating total time taken by the program.
-		double time_taken = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+		double time_taken = static_cast<double>(chrono::duration_cast<chrono::nanoseconds>(end - start).count());
 		time_taken *= 1e-9;
 		
 		myfile << "Time taken by function <Long Multipication> is : " << fixed

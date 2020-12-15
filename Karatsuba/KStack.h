@@ -6,8 +6,8 @@ namespace Mult
 	struct Item
 	{
 		Karatsuba k;
-		int line;
 		intArr returnVal;
+		int line;
 	};
 	class Node
 	{

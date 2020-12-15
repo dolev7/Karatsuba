@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="intArr.cpp" />
     <ClCompile Include="Karastuba.cpp" />
     <ClCompile Include="KStack.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Karatsuba.h" />
     <ClInclude Include="KStack.h" />
     <ClInclude Include="Long_Mult.h" />
+    <ClInclude Include="mainHead.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

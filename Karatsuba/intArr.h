@@ -11,7 +11,6 @@ namespace Mult
 
         intArr(int size);
         intArr() {};
-        ~intArr();
         intArr AddZeros(int numberOfZeros);
         void insert(int place, int value);
         int getActualSize()const;
