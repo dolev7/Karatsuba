@@ -3,11 +3,29 @@
 
 namespace Mult
 {
-	struct Item
+	class Item
 	{
-		Karatsuba k;
-		intArr returnVal;
-		int line;
+	public:
+		intArr _x;
+		intArr _y;
+		int _n;
+		intArr _returnVal;
+		int _line;
+		intArr ac;
+		intArr z2;
+		intArr abcd;
+		intArr z0;
+		intArr z1z0z2;
+		intArr restemp;
+		Item(intArr x, intArr y, int n,intArr res, int line)
+		{
+			_x = x;
+			_y = y;
+			_n = n;
+			_returnVal = res;
+			_line = line;
+		}
+		Item() {};
 	};
 	class Node
 	{

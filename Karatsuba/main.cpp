@@ -1,6 +1,7 @@
 #include "mainHead.h"
 int main()
 {
+	
 	ofstream myfile("Measure.txt");
 	int n=0;
 	bool inputOK=getN(n);
@@ -17,9 +18,9 @@ int main()
 	y.cutLeadingZeros();
 	Karatsuba calc(x,y,n);
 	Multi classic(n, xclassic, yclassic);
-	classic.LongMult_Print_and_TimeMeasure(myfile);
-	calc.KaratsubaRec_Print_and_TimeMeasure(myfile);
-//	calc.KaratsubaIterative_Print_and_TimeMeasure(myfile);
+//	classic.LongMult_Print_and_TimeMeasure(myfile);
+//	calc.KaratsubaRec_Print_and_TimeMeasure(myfile);
+	intArr bo = calc.KaratsubaIterative(x, y, n); bo.printArr();
 	myfile.close();
 	delete[] xclassic;
 	delete[] yclassic;
