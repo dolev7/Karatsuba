@@ -24,6 +24,6 @@ namespace Mult
 		intArr KaratsubaIterative(intArr x, intArr y, int size);
 		void KaratsubaIterative_Print_and_TimeMeasure(ofstream& myfile);
 		void KaratsubaRecStarter(intArr x, intArr y, int n ,intArr& res);
-		
+		void KaratsubaIterativeStarter(intArr x, intArr y, int n, intArr& res);	
 	};
 }

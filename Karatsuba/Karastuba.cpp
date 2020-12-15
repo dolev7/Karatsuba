@@ -162,6 +162,10 @@ namespace Mult
 	{
 		res = KaratsubaRec(x, y, n);
 	}
+	void Karatsuba::KaratsubaIterativeStarter(intArr x, intArr y, int n, intArr& res)
+	{
+		res = KaratsubaIterative(x, y, n);
+	}
 
 	intArr Karatsuba::KaratsubaIterative(intArr x, intArr y, int size)
 	{
@@ -197,7 +201,7 @@ namespace Mult
 						size = sizeY;
 					}
 					Curr._n = size;
-					cout << "THE WORLD NOW IS || X:"; Curr._x.printArr(); cout << "|| Y:"; Curr._y.printArr(); cout << " || SIZE:" << size << endl;
+			
 					if (Curr._n < 2)
 					{
 						intArr baseCase(2);
@@ -255,10 +259,6 @@ namespace Mult
 				Curr.z1z0z2 = subtractArrays(subtractArrays(Curr.abcd, Curr.ac), Curr.z2);
 				Curr.z0.shiftLeft(Curr._n + Curr._n % 2);
 				Curr.z1z0z2.shiftLeft((Curr._n) / 2 + Curr._n % 2);
-
-				cout << "summary where || X = "; Curr._x.printArr(); cout << "  || Y = "; Curr._y.printArr(); cout << endl;
-				cout << "Z0 is: "; Curr.z0.printArr(); cout << " ||Shifted Z1Z0Z2 is: "; Curr.z1z0z2.printArr(); cout << " ||Z2 is: "; Curr.z2.printArr(); cout << endl;
-
 				Curr.restemp = addArrays(addArrays(Curr.z0, Curr.z1z0z2), Curr.z2);
 				Curr._returnVal = Curr.restemp;
 				temp = Curr._returnVal;
@@ -292,14 +292,15 @@ namespace Mult
 		cout << "Karatsuba(iterative) : x * y = ";
 		auto start = chrono::high_resolution_clock::now();
 		ios_base::sync_with_stdio(false);
-		intArr printIT = this->KaratsubaIterative(this->_x, this->_y, this->_n);
+		intArr res(2*_n);
+		KaratsubaIterativeStarter(_x, _y,_n,res);
 		auto end = chrono::high_resolution_clock::now();
 		double time_taken = static_cast<double>(chrono::duration_cast<chrono::nanoseconds>(end - start).count());
 		time_taken *= 1e-9;
-		myfile << "Time taken by function <Karatsuba Recursive> is : " << fixed
+		myfile << "Time taken by function <Karatsuba Iterative> is : " << fixed
 			<< time_taken << setprecision(9);
 		myfile << " sec" << endl;
-		printIT.printArr();
+		res.printArr();
 	}
 
 

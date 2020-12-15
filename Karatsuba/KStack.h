@@ -25,7 +25,7 @@ namespace Mult
 			_returnVal = res;
 			_line = line;
 		}
-		Item() {};
+		Item() { _n = 0; _line = 0; };
 	};
 	class Node
 	{
@@ -51,6 +51,5 @@ namespace Mult
 		bool IsEmpty();
 		void Push(Item item);
 		Item Pop();
-		//Node* Top();
 	};
 }

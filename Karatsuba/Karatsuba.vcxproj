@@ -139,7 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Helper.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="intArr.cpp" />
     <ClCompile Include="Karastuba.cpp" />
     <ClCompile Include="KStack.cpp" />

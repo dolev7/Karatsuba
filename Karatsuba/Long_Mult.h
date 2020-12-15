@@ -18,7 +18,6 @@ namespace Mult
 	public:
 		Multi(int n, int x[], int y[]);
 		~Multi();
-		//bool inputCheck(char* n, int x[], int y[]) ;
 		void LongMult();
 		void multX_Ydigit(int yDig, int start);
 		void addRows(int start);
