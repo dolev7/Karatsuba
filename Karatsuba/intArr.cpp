@@ -10,8 +10,7 @@ namespace Mult
 {
     intArr::intArr(int size)
     {
-        for (int i = 0; i < size; i++)
-            intArray.push_back(0);
+        intArray.resize(size);
     }
     void intArr::insert(int place, int value)
     {
@@ -55,7 +54,6 @@ namespace Mult
             else
                 break;
         }
-        
         return size-zeros;
     }
 
