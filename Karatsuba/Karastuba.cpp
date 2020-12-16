@@ -288,7 +288,6 @@ namespace Mult
 
 	void Karatsuba::KaratsubaIterative_Print_and_TimeMeasure(ofstream& myfile)
 	{
-
 		cout << "Karatsuba(iterative) : x * y = ";
 		auto start = chrono::high_resolution_clock::now();
 		ios_base::sync_with_stdio(false);
@@ -302,6 +301,4 @@ namespace Mult
 		myfile << " sec" << endl;
 		res.printArr();
 	}
-
-
 }

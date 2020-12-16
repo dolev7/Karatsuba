@@ -3,7 +3,8 @@ bool getN(int& n)
 {
 	char d;
 	char ntoget[MAX_SIZE];
-	getchar();//skip space
+	d=getchar();//skip space
+	while(d==' ')
 	d = getchar();
 	int i = 0;
 	bool leadzero = false;
@@ -24,7 +25,7 @@ bool getN(int& n)
 	if (leadzero)
 	{
 		if (i == 1)
-			cout << "you have entered n=0 therefore x and y are empty numbers";
+			cout << "Long multiplication : x * y = 0" << endl << "Karatsuba(recursive) : x * y = 0" <<endl<< "Karatsuba(iterative) : x * y = 0";
 		else
 			cout << "wrong output";
 		return false;
