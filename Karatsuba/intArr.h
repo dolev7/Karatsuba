@@ -12,6 +12,7 @@ namespace Mult
         intArr(int size);
         intArr() {};
         intArr AddZeros(int numberOfZeros);
+        void changeSize(int size);
         void insert(int place, int value);
         int getActualSize()const;
         int getSize() { return (int)intArray.size(); }

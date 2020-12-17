@@ -1,3 +1,3 @@
-Time taken by function <Long Multipication> is : 0.022420 sec
-Time taken by function <Karatsuba Recursive> is : 4.116094400 sec
-Time taken by function <Karatsuba Iterative> is : 13.108922000 sec
+Time taken by function <Long Multipication> is : 0.000001 sec
+Time taken by function <Karatsuba Recursive> is : 0.000059900 sec
+Time taken by function <Karatsuba Iterative> is : 0.000059300 sec

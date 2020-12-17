@@ -39,9 +39,14 @@ namespace Mult
     }
     void intArr::shiftLeft(int toshift)
     {
-        for (int i = 0; i < toshift; i++)
-            intArray.push_back(0);
-
+            int newsize =(int)intArray.size() + toshift;
+            intArray.resize(newsize);
+            for (int i =(int)intArray.size(); i < newsize; i++)
+                intArray[i] = 0;
+    }
+    void intArr::changeSize(int size)
+    {
+        intArray.resize(size);
     }
     int intArr::getActualSize()const
     { 

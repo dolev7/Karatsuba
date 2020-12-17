@@ -127,10 +127,8 @@ namespace Mult
 		if (size < 2)
 		{
 			intArr baseCase(2);
-			if (x.getActualSize() != x.getSize())
-				x.cutLeadingZeros();
-			if (y.getActualSize() != y.getSize())
-				y.cutLeadingZeros();
+			x.cutLeadingZeros();
+			y.cutLeadingZeros();
 			baseCase.insert(1, ((x.get(0) * y.get(0)) % 10));
 			if (((x.get(0) * y.get(0)) / 10) != 0)
 				baseCase.insert(0, ((x.get(0) * y.get(0)) / 10));
@@ -140,9 +138,11 @@ namespace Mult
 		}
 		int sizeLeft = size / 2;
 		int sizeRight = (size / 2) + (size % 2);
-		intArr a = getLeftDigits(x);
+		intArr a = x;
+		a.changeSize(sizeLeft);
 		intArr b = getRightDigits(x);
-		intArr c = getLeftDigits(y);
+		intArr c = y;
+		c.changeSize(sizeLeft);
 		intArr d = getRightDigits(y);
 		intArr z0 = KaratsubaRec(a, c, sizeLeft);
 		intArr z1 = KaratsubaRec(addArrays(a, b), addArrays(c, d), sizeLeft + 1);
