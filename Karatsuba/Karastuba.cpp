@@ -104,8 +104,7 @@ namespace Mult
 		int j = 0;
 		for (int i = start; i < wsize; i++, j++)
 			toreturn.insert(j, w.get(i));
-		if (toreturn.getActualSize() != toreturn.getSize())
-			toreturn.cutLeadingZeros();
+		toreturn.cutLeadingZeros();
 		return toreturn;
 	}
 	intArr Karatsuba::KaratsubaRec(intArr x, intArr y, int size)
@@ -141,20 +140,16 @@ namespace Mult
 		}
 		int sizeLeft = size / 2;
 		int sizeRight = (size / 2) + (size % 2);
-		intArr a(sizeLeft), b(sizeRight), c(sizeLeft), d(sizeRight);
-		a = getLeftDigits(x);
-		b = getRightDigits(x);
-		c = getLeftDigits(y);
-		d = getRightDigits(y);
-
-		intArr z0(size), z1(size + 1), z2(size);
-		z0 = KaratsubaRec(a, c, sizeLeft);
-		z1 = KaratsubaRec(addArrays(a, b), addArrays(c, d), sizeLeft + 1);
-		z2 = KaratsubaRec(b, d, sizeRight);
-		intArr shiftedz0((sizeLeft * 2)), shiftedZ1z0z2(sizeLeft);
-		shiftedz0 = z0;
+		intArr a = getLeftDigits(x);
+		intArr b = getRightDigits(x);
+		intArr c = getLeftDigits(y);
+		intArr d = getRightDigits(y);
+		intArr z0 = KaratsubaRec(a, c, sizeLeft);
+		intArr z1 = KaratsubaRec(addArrays(a, b), addArrays(c, d), sizeLeft + 1);
+		intArr z2 = KaratsubaRec(b, d, sizeRight);
+		intArr shiftedz0 = z0;
 		shiftedz0.shiftLeft(size + size % 2);
-		shiftedZ1z0z2 = subtractArrays(subtractArrays(z1, z0), z2);
+		intArr shiftedZ1z0z2 = subtractArrays(subtractArrays(z1, z0), z2);
 		shiftedZ1z0z2.shiftLeft(sizeRight);
 		return addArrays(addArrays(shiftedz0, shiftedZ1z0z2), z2);
 	}

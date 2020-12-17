@@ -58,7 +58,6 @@ namespace Mult
 			_currentRow[i] += _x[_n - k - 1] * yDig;
 			_currentRow[i - 1] = _currentRow[i] / 10;
 			_currentRow[i] %= 10;
-
 		}
 	}
 	void Multi::addRows(int start)

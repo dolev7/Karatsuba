@@ -1,7 +1,6 @@
 #include "mainHead.h"
 int main()
 {
-	
 	ofstream myfile("Measure.txt");
 	int n=0;
 	bool inputOK=getN(n);
